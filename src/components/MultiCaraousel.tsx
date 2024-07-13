@@ -21,7 +21,13 @@ import {
 import { Badge } from "@/components/ui/badge";
 
 const MultiCaraousel: React.FC<MultiCaraouselProps> = ({ animes }) => {
-  console.log(animes);
+  const truncateText = (text: string, maxLength: number): string => {
+    if (text.length > maxLength) {
+      return text.substring(0, maxLength) + "...";
+    }
+    return text;
+  };
+
   return (
     <Carousel
       opts={{
@@ -42,7 +48,9 @@ const MultiCaraousel: React.FC<MultiCaraouselProps> = ({ animes }) => {
                       className="absolute w-full h-full object-cover"
                     />
                   </figure>
-                  <p>{anime.title.romaji}</p>
+                  <p className="mt-2 text-zinc-500 text-base font-medium">
+                    {truncateText(anime.title.romaji, 50)}
+                  </p>
                 </div>
               </HoverCardTrigger>
               <HoverCardContent>
@@ -62,10 +70,10 @@ const MultiCaraousel: React.FC<MultiCaraouselProps> = ({ animes }) => {
                   <p>{anime.episodes} episodes</p>
                 </div>
                 <div className="flex flex-wrap gap-2 mt-2">
-                    {anime.genres.map((genre) => (
-                      <Badge key={genre}>{genre}</Badge>
-                    ))}
-                  </div>
+                  {anime.genres.map((genre) => (
+                    <Badge key={genre}>{genre}</Badge>
+                  ))}
+                </div>
               </HoverCardContent>
             </HoverCard>
           </CarouselItem>

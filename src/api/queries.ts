@@ -1,54 +1,21 @@
 import { gql } from "@apollo/client";
+import getCurrentSeasonAndYear from "@/lib/getCurrentSeason";
 
-export const GET_TRENDING_ANIME = gql`
-  query {
-    Page(page: 1, perPage: 10) {
-      media(sort: TRENDING_DESC, type: ANIME) {
-        id
-        title {
-          romaji
-          english
-          native
-        }
-        coverImage {
-          large
-        }
-        episodes
-        averageScore
-        status
-        format
-        startDate {
-          year
-          month
-          day
-        }
-        endDate {
-          year
-          month
-          day
-        }
-        nextAiringEpisode {
-          timeUntilAiring
-          episode
-        }
-        studios {
-          nodes {
-            name
-          }
-        }
-        genres
-        duration
-        siteUrl
-        description
-      }
-    }
-  }
-`;
+const { season, seasonYear } = getCurrentSeasonAndYear();
+
+console.log(season, seasonYear);
 
 export const GET_POPULAR_THIS_SEASON = gql`
-  query {
+  query GetPopularThisSeason($season: MediaSeason, $seasonYear: Int) {
     Page(page: 1, perPage: 10) {
-      media(season: SUMMER, sort: POPULARITY_DESC, type: ANIME) {
+      media(
+        season: $season
+        seasonYear: $seasonYear
+        type: ANIME
+        status: RELEASING
+        sort: POPULARITY_DESC
+        isAdult: false
+      ) {
         id
         title {
           romaji
@@ -59,19 +26,7 @@ export const GET_POPULAR_THIS_SEASON = gql`
           large
         }
         episodes
-        averageScore
-        status
         format
-        startDate {
-          year
-          month
-          day
-        }
-        endDate {
-          year
-          month
-          day
-        }
         nextAiringEpisode {
           timeUntilAiring
           episode
@@ -82,9 +37,6 @@ export const GET_POPULAR_THIS_SEASON = gql`
           }
         }
         genres
-        duration
-        siteUrl
-        description
       }
     }
   }
@@ -109,19 +61,7 @@ export const GET_UPCOMING_NEXT_SEASON = gql`
           large
         }
         episodes
-        averageScore
-        status
         format
-        startDate {
-          year
-          month
-          day
-        }
-        endDate {
-          year
-          month
-          day
-        }
         nextAiringEpisode {
           timeUntilAiring
           episode
@@ -132,9 +72,6 @@ export const GET_UPCOMING_NEXT_SEASON = gql`
           }
         }
         genres
-        duration
-        siteUrl
-        description
       }
     }
   }
