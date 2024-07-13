@@ -11,7 +11,7 @@ This project is an anime information website built using the following technolog
 - Display trending anime
 - Display popular anime of the current season
 - Display upcoming anime for the next season
-- View detailed information about each anime (!work in progress)
-- Anime broadcast schedule (!work in progress)
+- View detailed information about each anime (work in progress!)
+- Anime broadcast schedule (work in progress!)
 - Infinite scroll to load more anime in popular and upcoming sections
 - Hover cards to show quick info about the anime
