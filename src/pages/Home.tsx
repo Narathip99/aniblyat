@@ -19,21 +19,24 @@ import getCurrentSeasonAndYear from "@/lib/getCurrentSeason";
 import { Link } from "react-router-dom";
 
 const Home: React.FC = () => {
-  const { season, seasonYear } = getCurrentSeasonAndYear();
+  const { season, seasonYear, nextSeason, nextSeasonYear } =
+    getCurrentSeasonAndYear();
 
   const {
     loading: popularLoading,
     error: popularError,
     data: popularData,
   } = useQuery<AnimeListData>(GET_POPULAR_THIS_SEASON, {
-    variables: { season, seasonYear },
+    variables: { season, seasonYear, perPage: 10 },
   });
 
   const {
     loading: upcomingLoading,
     error: upcomingError,
     data: upcomingData,
-  } = useQuery<AnimeListData>(GET_UPCOMING_NEXT_SEASON);
+  } = useQuery<AnimeListData>(GET_UPCOMING_NEXT_SEASON, {
+    variables: { season: nextSeason, seasonYear: nextSeasonYear, perPage: 10 },
+  });
 
   if (popularLoading || upcomingLoading) {
     return (
@@ -62,7 +65,7 @@ const Home: React.FC = () => {
             Popular This Season
           </h2>
           <Link
-            to={`/season/${seasonYear}/${season}`}
+            to={`/popular-this-season`}
             className="text-xs font-medium text-zinc-500"
           >
             View All
@@ -79,7 +82,7 @@ const Home: React.FC = () => {
             Upcoming Next Season
           </h2>
           <Link
-            to={`/season/${seasonYear}/${season}`}
+            to={`/upcoming-next-season`}
             className="text-xs font-medium text-zinc-500"
           >
             View All

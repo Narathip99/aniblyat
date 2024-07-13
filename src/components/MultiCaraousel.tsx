@@ -12,6 +12,8 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
 } from "@/components/ui/carousel";
 import {
   HoverCard,
@@ -36,7 +38,7 @@ const MultiCaraousel: React.FC<MultiCaraouselProps> = ({ animes }) => {
       className="w-full"
     >
       <CarouselContent>
-        {animes.map((anime) => (
+        {animes.slice(0, 10).map((anime) => (
           <CarouselItem key={anime.id} className="basis-1/6 relative">
             <HoverCard>
               <HoverCardTrigger>
@@ -79,6 +81,8 @@ const MultiCaraousel: React.FC<MultiCaraouselProps> = ({ animes }) => {
           </CarouselItem>
         ))}
       </CarouselContent>
+      <CarouselPrevious />
+      <CarouselNext />
     </Carousel>
   );
 };

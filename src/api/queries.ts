@@ -1,13 +1,31 @@
 import { gql } from "@apollo/client";
 import getCurrentSeasonAndYear from "@/lib/getCurrentSeason";
 
-const { season, seasonYear } = getCurrentSeasonAndYear();
+const {
+  season,
+  seasonYear: year,
+  nextSeason,
+  nextSeasonYear,
+} = getCurrentSeasonAndYear();
 
-console.log(season, seasonYear);
+console.log(
+  "season",
+  season,
+  "year",
+  year,
+  "nextSeason",
+  nextSeason,
+  "nextSeasonYear",
+  nextSeasonYear
+);
 
 export const GET_POPULAR_THIS_SEASON = gql`
-  query GetPopularThisSeason($season: MediaSeason, $seasonYear: Int) {
-    Page(page: 1, perPage: 10) {
+  query GetPopularThisSeason(
+    $season: MediaSeason
+    $seasonYear: Int
+    $perPage: Int
+  ) {
+    Page(page: 1, perPage: $perPage) {
       media(
         season: $season
         seasonYear: $seasonYear
@@ -38,16 +56,25 @@ export const GET_POPULAR_THIS_SEASON = gql`
         }
         genres
       }
+      pageInfo {
+        currentPage
+        lastPage
+        hasNextPage
+      }
     }
   }
 `;
 
 export const GET_UPCOMING_NEXT_SEASON = gql`
-  query {
-    Page(page: 1, perPage: 10) {
+  query GetUpcomingNextSeason(
+    $season: MediaSeason
+    $seasonYear: Int
+    $perPage: Int
+  ) {
+    Page(page: 1, perPage: $perPage) {
       media(
-        season: FALL
-        seasonYear: 2024
+        season: $season
+        seasonYear: $seasonYear
         sort: POPULARITY_DESC
         type: ANIME
       ) {
@@ -72,6 +99,11 @@ export const GET_UPCOMING_NEXT_SEASON = gql`
           }
         }
         genres
+      }
+      pageInfo {
+        currentPage
+        lastPage
+        hasNextPage
       }
     }
   }
