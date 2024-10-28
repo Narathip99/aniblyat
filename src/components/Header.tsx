@@ -9,16 +9,16 @@ const menuItems = [
     href: "/",
   },
   {
-    name: "About",
-    href: "/about",
+    name: "Airing",
+    href: "/",
   },
   {
-    name: "Contact",
-    href: "/contact",
+    name: "Upcoming",
+    href: "/",
   },
   {
-    name: "Blog",
-    href: "/blog",
+    name: "Completed",
+    href: "/",
   },
 ];
 
@@ -44,12 +44,12 @@ const Header = () => {
           : "h-[100px] bg-background"
       }`}
     >
-      <div className="container mx-auto flex h-full w-full items-center justify-between">
+      <div className="container mx-auto px-4 md:px-0 flex h-full w-full items-center justify-between">
         <div>
           {/* logo */}
           <span className="text-3xl font-bold">Aniblyat</span>
         </div>
-        <div className="flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-8">
           <nav className="flex gap-8">
             {menuItems.map((item) => (
               <Link
